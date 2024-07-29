@@ -1,0 +1,3 @@
+/Users/macos/CLionProjects/calendar-app-cpp/cmake-build-debug/CMakeFiles/calendar_app_cpp.dir
+/Users/macos/CLionProjects/calendar-app-cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/macos/CLionProjects/calendar-app-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
