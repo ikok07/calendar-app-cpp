@@ -16,6 +16,7 @@ public:
     void set_date(const time_t& date);
     string get_text() const;
     time_t get_date() const;
+    bool in_same_date_as(const Note& cmp_note);
 private:
     string text;
     time_t date = time(nullptr);

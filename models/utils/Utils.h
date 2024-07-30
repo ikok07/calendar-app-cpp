@@ -23,6 +23,7 @@ public:
     static int days_in_month(int month, int year);
     static string month_name(int month);
     static ParsedDate parse_date_str(const string& date_str);
+    static int timestamp_same_day(const time_t& t1, const time_t& t2);
 };
 
 

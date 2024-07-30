@@ -13,6 +13,7 @@ public:
     static void display_days_of_month();
     static void add_note();
     static void display_note();
+    static void delete_note();
 };
 
 

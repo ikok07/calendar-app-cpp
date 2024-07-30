@@ -71,3 +71,21 @@ ParsedDate Utils::parse_date_str(const string &date_str) {
     parsed_date.year = stoi(year_str);
     return parsed_date;
 }
+
+int Utils::timestamp_same_day(const time_t &t1, const time_t &t2) {
+    struct tm src_time = *localtime(&t1);
+    struct tm *cmp_time = localtime(&t2);
+    int result = 0;
+
+    if (cmp_time->tm_year < src_time.tm_year) result = -1;
+    else if (cmp_time->tm_year > src_time.tm_year) result = 1;
+    if (result != 0) return result;
+
+    if (cmp_time->tm_mon < src_time.tm_mon) result = -1;
+    else if (cmp_time->tm_mon > src_time.tm_mon) result = 1;
+    if (result != 0) return result;
+
+    if (cmp_time->tm_mday < src_time.tm_mday) result = -1;
+    else if (cmp_time->tm_mday > src_time.tm_mday) result = 1;
+    return result;
+}

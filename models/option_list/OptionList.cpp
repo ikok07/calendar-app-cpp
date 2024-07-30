@@ -15,6 +15,8 @@ string OptionList::parse_option(Option opt) {
             return "Add note";
         case Option::DISP_NOTE:
             return "Display note";
+        case Option::DEL_NOTE:
+            return "Delete note";
         default:
             return "Invalid option!";
     }
@@ -33,6 +35,9 @@ void OptionList::sel_option(int opt) {
             break;
         case Option::DISP_NOTE:
             OptionHandler::display_note();
+            break;
+        case Option::DEL_NOTE:
+            OptionHandler::delete_note();
             break;
         case Option::NONE:
             exit(1);

@@ -29,3 +29,13 @@ time_t Note::get_date() const {
     return this->date;
 }
 
+bool Note::in_same_date_as(const Note &cmp_note) {
+    struct tm *src_time = localtime(&date);
+    struct tm *cmp_time = localtime(&cmp_note.date);
+    bool is_same_date = !text.empty() &&
+            cmp_time->tm_year == src_time->tm_year &&
+            cmp_time->tm_mon == src_time->tm_mon &&
+            cmp_time->tm_mday == src_time->tm_mday;
+    return is_same_date;
+}
+
