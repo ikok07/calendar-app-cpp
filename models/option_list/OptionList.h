@@ -10,7 +10,7 @@
 using namespace std;
 
 enum class Option {
-    CURR_DAY = 1, DAYS_IN_MONTH, ADD_NOTE, DISP_NOTE, DEL_NOTE, NONE = -1
+    CURR_DAY = 1, DAYS_IN_MONTH, ADD_NOTE, DISP_NOTE, DEL_NOTE, FETCH_COORD, FRIENDLY_DATE, NONE = -1
 };
 
 class OptionList {
@@ -26,7 +26,9 @@ private:
         Option::DAYS_IN_MONTH,
         Option::ADD_NOTE,
         Option::DISP_NOTE,
-        Option::DEL_NOTE
+        Option::DEL_NOTE,
+        Option::FETCH_COORD,
+        Option::FRIENDLY_DATE,
     };
 };
 

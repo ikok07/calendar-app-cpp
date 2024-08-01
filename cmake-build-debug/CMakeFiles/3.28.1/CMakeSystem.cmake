@@ -3,7 +3,7 @@ set(CMAKE_HOST_SYSTEM_NAME "Darwin")
 set(CMAKE_HOST_SYSTEM_VERSION "23.2.0")
 set(CMAKE_HOST_SYSTEM_PROCESSOR "x86_64")
 
-
+include("/Users/macos/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
 set(CMAKE_SYSTEM "Darwin-23.2.0")
 set(CMAKE_SYSTEM_NAME "Darwin")

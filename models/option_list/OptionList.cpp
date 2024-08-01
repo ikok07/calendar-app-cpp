@@ -17,6 +17,10 @@ string OptionList::parse_option(Option opt) {
             return "Display note";
         case Option::DEL_NOTE:
             return "Delete note";
+        case Option::FETCH_COORD:
+            return "Fetch live date for coordinates";
+        case Option::FRIENDLY_DATE:
+            return "Convert a date time into a friendly string";
         default:
             return "Invalid option!";
     }
@@ -39,23 +43,32 @@ void OptionList::sel_option(int opt) {
         case Option::DEL_NOTE:
             OptionHandler::delete_note();
             break;
+        case Option::FETCH_COORD:
+            OptionHandler::fetch_by_coordinates();
+            break;
+        case Option::FRIENDLY_DATE:
+            OptionHandler::convert_to_friendly_date();
+            break;
         case Option::NONE:
             exit(1);
         default:
-            throw invalid_argument("option");
+            throw invalid_argument("Invalid option selected!");
     }
 }
 
 void OptionList::list_options() {
     int option;
     while (true) {
-        cout << "Select one of the options: " << endl << endl;
-        for (int i = 0; i < options.size(); i++) {
-            cout << i + 1 << ". " << parse_option(options[i]) << endl;
+        try {
+            cout << "Select one of the options: " << endl << endl;
+            for (int i = 0; i < options.size(); i++) {
+                cout << i + 1 << ". " << parse_option(options[i]) << endl;
+            }
+            cout << "-1. Exit" << endl;
+            cin >> option;
+            sel_option(option);
+        } catch (const exception& ex) {
+            cerr << ex.what() << endl;
         }
-        cout << "-1. Exit" << endl;
-        cin >> option;
-        if (cin.fail()) throw invalid_argument("input option");
-        sel_option(option);
     }
 }

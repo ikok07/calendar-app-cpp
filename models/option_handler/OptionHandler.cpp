@@ -3,15 +3,24 @@
 //
 
 #include <iostream>
+#include <string>
 #include <ctime>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 #include "OptionHandler.h"
 #include "../utils/Utils.h"
 #include "../note/Note.h"
+#include "../coordinates/Coordinates.h"
+#include "../request/Request.h"
+
+#include "../responses/fetch_time/FetchTimeResponse.h"
+#include "../responses/friendly_date/FriendlyDateResponse.h"
+
+#include "../bodies/FriendlyDateBody.h"
 
 using namespace std;
 
@@ -224,4 +233,46 @@ void OptionHandler::delete_note() {
     out_file.close();
     string notes = delete_count > 1 ? " notes!" : " note!";
     cout << "Successfully deleted " << delete_count << notes << endl;
+}
+
+void OptionHandler::fetch_by_coordinates() {
+    Coordinates coordinates = Coordinates::generate_from_input();
+    stringstream str_stream;
+    str_stream << "https://timeapi.io/api/Time/current/coordinate?latitude=" << coordinates.get_data().lat << "&longitude=" << coordinates.get_data().lng;
+
+    Request req{str_stream.str().c_str()};
+    auto response = req.get<FetchTimeResponse>();
+    if (response.failed()) {
+        cerr << "Failed to fetch date. Please try again!" << endl;
+        return;
+    }
+    rdate_t r_date = response.data();
+
+    cout << "\n----------- Date -----------" << endl;
+    cout << "Timezone: " << r_date.timeZone << endl;
+    printf("%02d.%02d.%d, %02d:%02d:%02d\n", r_date.day, r_date.month, r_date.year, r_date.hour, r_date.minute, r_date.seconds);
+    cout << "\n";
+}
+
+void OptionHandler::convert_to_friendly_date() {
+    string date_str;
+    string lang;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Enter date (yyyy-mm-dd hh:mm:ss):" << endl;
+    getline(cin, date_str);
+    cout << "Enter language abbreviation (en, bg, etc.): " << endl;
+    cin >> lang;
+
+    rheader_t content_type = {"Content-Type", "application/json"};
+    roptions_t options = {.headers = {content_type}};
+    FriendlyDateBody body = {date_str, lang};
+    Request req{"https://timeapi.io/api/Conversion/Translate", &options};
+    auto response = req.post<FriendlyDateResponse, FriendlyDateBody>(body);
+    if (response.failed()) {
+        cout << "Failed to convert date time. Please try again!" << endl;
+        return;
+    }
+    cout << "\n----------- Friendly date -----------" << endl;
+    cout << response.data().friendlyDateTime << endl;
+    cout << "\n";
 }

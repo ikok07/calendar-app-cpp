@@ -14,6 +14,8 @@ public:
     static void add_note();
     static void display_note();
     static void delete_note();
+    static void fetch_by_coordinates();
+    static void convert_to_friendly_date();
 };
 
 
